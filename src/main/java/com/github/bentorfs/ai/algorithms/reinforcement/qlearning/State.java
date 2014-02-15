@@ -1,5 +1,7 @@
 package com.github.bentorfs.ai.algorithms.reinforcement.qlearning;
 
+import java.util.List;
+
 /**
  * 
  * 
@@ -7,8 +9,10 @@ package com.github.bentorfs.ai.algorithms.reinforcement.qlearning;
  */
 public interface State {
 
+  public List<State> getPossibleNextStates();
+
   public boolean isFinalState();
 
-  public ActionResult performAction();
+  public ActionResult goToState(State nextState);
 
 }

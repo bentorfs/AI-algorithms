@@ -16,8 +16,8 @@ public class Episode {
 
   }
 
-  public void addStep(State state, Action action, double reward) {
-    steps.add(new EpisodeStep(state, action, reward));
+  public void addStep(State state, State nextState, double reward) {
+    steps.add(new EpisodeStep(state, nextState, reward));
   }
 
   public List<EpisodeStep> getSteps() {
@@ -32,14 +32,14 @@ public class Episode {
 
     private State state;
 
-    private Action action;
+    private State nextState;
 
     private double reward;
 
-    public EpisodeStep(State state, Action action, double reward) {
+    public EpisodeStep(State state, State nextState, double reward) {
       super();
       this.state = state;
-      this.action = action;
+      this.nextState = nextState;
       this.reward = reward;
     }
 
@@ -51,14 +51,6 @@ public class Episode {
       this.state = state;
     }
 
-    public Action getAction() {
-      return action;
-    }
-
-    public void setAction(Action action) {
-      this.action = action;
-    }
-
     public double getReward() {
       return reward;
     }
@@ -67,5 +59,22 @@ public class Episode {
       this.reward = reward;
     }
 
+    public State getNextState() {
+      return nextState;
+    }
+
+    public void setNextState(State nextState) {
+      this.nextState = nextState;
+    }
+
+  }
+
+  @Override
+  public String toString() {
+    StringBuffer result = new StringBuffer();
+    for (EpisodeStep step : steps) {
+      result.append("Earned reward: " + step.getReward() + ", by doing: " + step.getNextState());
+    }
+    return result.toString();
   }
 }

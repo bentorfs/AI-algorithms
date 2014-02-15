@@ -5,6 +5,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.github.bentorfs.ai.algorithms.search.asearch.Node;
+import com.github.bentorfs.ai.testutilities.mazes.Maze;
+import com.github.bentorfs.ai.testutilities.mazes.MazeCoordinate;
 
 
 /**

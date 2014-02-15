@@ -1,5 +1,6 @@
-package com.github.bentorfs.ai.algorithms.search.asearch.mazes;
+package com.github.bentorfs.ai.testutilities.mazes;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -83,6 +84,58 @@ public class Maze {
     else {
       return false;
     }
+  }
+
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + ((end == null) ? 0 : end.hashCode());
+    result = prime * result + Arrays.hashCode(map);
+    result = prime * result + ((start == null) ? 0 : start.hashCode());
+    result = prime * result + xSize;
+    result = prime * result + ySize;
+    return result;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    Maze other = (Maze) obj;
+    if (end == null) {
+      if (other.end != null) {
+        return false;
+      }
+    }
+    else if (!end.equals(other.end)) {
+      return false;
+    }
+    if (!Arrays.equals(map, other.map)) {
+      return false;
+    }
+    if (start == null) {
+      if (other.start != null) {
+        return false;
+      }
+    }
+    else if (!start.equals(other.start)) {
+      return false;
+    }
+    if (xSize != other.xSize) {
+      return false;
+    }
+    if (ySize != other.ySize) {
+      return false;
+    }
+    return true;
   }
 
 }

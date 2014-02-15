@@ -1,14 +1,25 @@
 package com.github.bentorfs.ai.common;
 
 /**
+ * Generic interface for a function learning algorithm.
  * 
+ * The attributes of the shown values must have a proper hashcode/equals, of course.
  * 
  * @author betorfs
  */
 public interface FunctionLearner<T> {
 
+  /**
+   * Predict the value for the given list of attributes, based on the examples seen so far
+   * 
+   * @param attributes
+   * @return
+   */
   public T predictValue(Object... attributes);
 
-  public void showValue(T newValue, Object... attributes);
+  /**
+   * Show the learner an example, containing its list of attributes, and the target value
+   */
+  public void showExample(T value, Object... attributes);
 
 }

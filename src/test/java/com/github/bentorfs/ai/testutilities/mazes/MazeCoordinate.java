@@ -1,4 +1,4 @@
-package com.github.bentorfs.ai.algorithms.search.asearch.mazes;
+package com.github.bentorfs.ai.testutilities.mazes;
 
 /**
  * 
