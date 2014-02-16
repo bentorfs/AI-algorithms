@@ -15,61 +15,61 @@ import com.github.bentorfs.ai.testutilities.mazes.MazeFactory;
  */
 public class SearchMazeTest {
 
-  @Test
-  public void testNoSolutions() {
-    Maze maze = MazeFactory.getImpossibleMaze();
+   @Test
+   public void testNoSolutions() {
+      Maze maze = MazeFactory.getImpossibleMaze();
 
-    ASearchAlgorithm algo = new ASearchAlgorithm();
+      ASearchAlgorithm algo = new ASearchAlgorithm();
 
-    Node startNode = new MazeNode(maze);
-    Node solution = algo.searchSolution(startNode);
+      Node startNode = new MazeNode(maze);
+      Node solution = algo.searchSolution(startNode);
 
-    Assert.assertNull(solution);
-  }
+      Assert.assertNull(solution);
+   }
 
-  @Test
-  public void testOnePath() {
-    int[][] array = new int[][]
-      {
-        { 1, 0, 0 },
-        { 1, 1, 0 },
-        { 0, 1, 1 } };
-    Maze maze = new Maze(0, 0, 2, 2, array);
+   @Test
+   public void testOnePath() {
+      int[][] array = new int[][]
+         {
+            { 1, 0, 0 },
+            { 1, 1, 0 },
+            { 0, 1, 1 } };
+      Maze maze = new Maze(0, 0, 2, 2, array);
 
-    ASearchAlgorithm algo = new ASearchAlgorithm();
+      ASearchAlgorithm algo = new ASearchAlgorithm();
 
-    Node startNode = new MazeNode(maze);
-    Node solution = algo.searchSolution(startNode);
+      Node startNode = new MazeNode(maze);
+      Node solution = algo.searchSolution(startNode);
 
-    Assert.assertNotNull(solution);
-    Assert.assertEquals(5, solution.getTotalCost());
-  }
+      Assert.assertNotNull(solution);
+      Assert.assertEquals(5, solution.getTotalCost());
+   }
 
-  @Test
-  public void testLongAndShortPath() {
-    Maze maze = MazeFactory.getSimpleMaze();
+   @Test
+   public void testLongAndShortPath() {
+      Maze maze = MazeFactory.getSimpleMazeWithOneSolution();
 
-    ASearchAlgorithm algo = new ASearchAlgorithm();
+      ASearchAlgorithm algo = new ASearchAlgorithm();
 
-    Node startNode = new MazeNode(maze);
-    Node solution = algo.searchSolution(startNode);
+      Node startNode = new MazeNode(maze);
+      Node solution = algo.searchSolution(startNode);
 
-    Assert.assertNotNull(solution);
-    Assert.assertEquals(5, solution.getTotalCost());
-  }
+      Assert.assertNotNull(solution);
+      Assert.assertEquals(5, solution.getTotalCost());
+   }
 
-  @Test
-  public void testBiggerMaze() {
-    Maze maze = MazeFactory.getBiggerMaze();
+   @Test
+   public void testBiggerMaze() {
+      Maze maze = MazeFactory.getBiggerMaze();
 
-    ASearchAlgorithm algo = new ASearchAlgorithm();
+      ASearchAlgorithm algo = new ASearchAlgorithm();
 
-    Node startNode = new MazeNode(maze);
-    Node solution = algo.searchSolution(startNode);
+      Node startNode = new MazeNode(maze);
+      Node solution = algo.searchSolution(startNode);
 
-    Assert.assertNotNull(solution);
-    Assert.assertEquals(25, solution.getTotalCost());
+      Assert.assertNotNull(solution);
+      Assert.assertEquals(25, solution.getTotalCost());
 
-    System.out.println(((MazeNode) solution).toString());
-  }
+      System.out.println(((MazeNode) solution).toString());
+   }
 }
