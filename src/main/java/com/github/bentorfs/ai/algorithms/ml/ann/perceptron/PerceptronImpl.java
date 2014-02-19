@@ -18,7 +18,8 @@ public class PerceptronImpl implements Perceptron {
    /**
     * Creates a new perceptron using the given weights
     */
-   public PerceptronImpl(List<Double> weights) {
+   public PerceptronImpl(Double constantInputWeight, List<Double> weights) {
+      this.constantInputWeight = constantInputWeight;
       this.weights = weights;
    }
 

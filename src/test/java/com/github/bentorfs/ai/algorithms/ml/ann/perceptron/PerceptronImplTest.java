@@ -9,7 +9,7 @@ public class PerceptronImplTest {
 
    @Test
    public void testPerceptronWithGivenWeights() {
-      Perceptron perceptron = new PerceptronImpl(Arrays.asList(1d, -1d));
+      Perceptron perceptron = new PerceptronImpl(0d, Arrays.asList(1d, -1d));
 
       Assert.assertEquals(1d, perceptron.getWeight(0), 0.000001d);
       Assert.assertEquals(-1d, perceptron.getWeight(1), 0.000001d);
