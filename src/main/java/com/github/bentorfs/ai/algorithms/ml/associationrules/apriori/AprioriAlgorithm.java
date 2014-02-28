@@ -39,7 +39,7 @@ public class AprioriAlgorithm {
 
       Set<Item> allItems = getAllItems(transactions);
 
-      logger.info("Generating frequent itemsets from " + transactions.size() + " transactions and " + allItems.size()
+      logger.debug("Generating frequent itemsets from " + transactions.size() + " transactions and " + allItems.size()
             + " different items");
 
       List<ItemSet> candidateFrequentItemSets = getItemSetsOfSize1(allItems);
@@ -55,7 +55,7 @@ public class AprioriAlgorithm {
          candidateFrequentItemSets = getCandidateItemSets(frequentItemSetsOfCurrentSize, currentSize);
       } while (candidateFrequentItemSets.size() > 0 && currentSize < maxItemSetSize);
 
-      logger.info("Done generating frequent itemsets. " + frequentItemSetsOfAllSizes.size()
+      logger.debug("Done generating frequent itemsets. " + frequentItemSetsOfAllSizes.size()
             + " frequent itemsets found");
       return frequentItemSetsOfAllSizes;
    }
@@ -64,7 +64,7 @@ public class AprioriAlgorithm {
     * Returns a list of itemsets that are frequent in the list of transactions
     */
    private List<ItemSet> getFrequentItemSets(List<ItemSet> candidateItemSets, Collection<Transaction> transactions) {
-      logger.info("Selecting frequent itemsets from " + candidateItemSets.size() + " candidates");
+      logger.debug("Selecting frequent itemsets from " + candidateItemSets.size() + " candidates");
       List<ItemSet> result = new ArrayList<>();
 
       for (ItemSet itemSet : candidateItemSets) {
@@ -81,7 +81,7 @@ public class AprioriAlgorithm {
             result.add(itemSet); // Is frequent
          }
       }
-      logger.info("Found " + result.size() + " frequent itemsets");
+      logger.debug("Found " + result.size() + " frequent itemsets");
       return result;
    }
 
@@ -89,7 +89,7 @@ public class AprioriAlgorithm {
     * Generate candidate frequent itemsets of size N, based on the frequent item sets of size N-1
     */
    private List<ItemSet> getCandidateItemSets(List<ItemSet> smallerFrequentItemSets, int currentSize) {
-      logger.info("Generating candidate frequent itemsets of size " + currentSize + " from itemsets of size "
+      logger.debug("Generating candidate frequent itemsets of size " + currentSize + " from itemsets of size "
             + (currentSize - 1));
       List<ItemSet> candidates = new ArrayList<>();
 
@@ -116,7 +116,7 @@ public class AprioriAlgorithm {
             itemsInSecondSet.add(lastFromSet2);
          }
       }
-      logger.info("Found " + candidates.size() + " candidate frequent itemsets of size " + currentSize);
+      logger.debug("Found " + candidates.size() + " candidate frequent itemsets of size " + currentSize);
       return candidates;
    }
 

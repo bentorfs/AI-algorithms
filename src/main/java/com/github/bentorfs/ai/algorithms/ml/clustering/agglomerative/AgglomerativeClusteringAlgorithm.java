@@ -8,7 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * 
+ * Agglomerative clustering algorithm. Continually merges the two most similar clusters in the input list that are the
+ * most similar into a bigger cluster. The input list are clusters of size 1
  * 
  * @author betorfs
  */
@@ -18,11 +19,21 @@ public class AgglomerativeClusteringAlgorithm {
 
    private ClusteringType type;
 
+   /**
+    * Creates a agglomerative clustering algorithm using the given clustering type: average linkage (minimizes the
+    * average distance between elements), complete (minimizes the largest distance between elements), or single linkage
+    * (minimizes the shortest distance between elements).
+    * 
+    * @param type
+    *           The type of clustering to use.
+    */
    public AgglomerativeClusteringAlgorithm(ClusteringType type) {
       this.type = type;
    }
 
    public Cluster induceClusters(Collection<Item> items) {
+      logger.debug("Incuding hierarchical clusters from a dataset with {} items, using clustering type {}",
+            items.size(), type.toString());
 
       // Create initial clusters of size 1, one for each item
       List<Cluster> currentClusters = new ArrayList<Cluster>();
@@ -33,6 +44,8 @@ public class AgglomerativeClusteringAlgorithm {
       // Keep merging the two closest clusters, until there is only one cluster left
       while (currentClusters.size() > 1) {
          ClusterPair closestClusters = findClosestClusters(currentClusters);
+
+         logger.trace("Closest clusters are {} and {}", closestClusters.first, closestClusters.second);
 
          Cluster newCluster = new SuperCluster(closestClusters.first, closestClusters.second);
          currentClusters.add(newCluster);

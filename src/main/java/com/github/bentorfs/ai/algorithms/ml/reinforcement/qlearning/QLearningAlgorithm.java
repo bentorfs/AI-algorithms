@@ -43,7 +43,7 @@ public class QLearningAlgorithm {
          recordedEpisode.addStep(currentState, nextState, result.getReward());
          currentState = nextState;
       }
-      logger.info("Experienced an episode");
+      logger.debug("Q-Learning experienced an episode");
       return recordedEpisode;
    }
 

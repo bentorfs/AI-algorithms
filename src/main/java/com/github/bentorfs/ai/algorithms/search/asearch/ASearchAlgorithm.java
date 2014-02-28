@@ -24,7 +24,7 @@ public class ASearchAlgorithm {
     * Returns null if no solution could be found
     */
    public Node searchSolution(Node startNode) {
-      logger.info("Starting A* search");
+      logger.debug("Starting A* search");
 
       // This queue will contain the nodes we have not yet visited, ordered by cost from low to high
       Queue<Node> unvisitedNodes = new PriorityQueue<>();
@@ -35,13 +35,13 @@ public class ASearchAlgorithm {
 
       while (!unvisitedNodes.isEmpty()) {
          Node mostPromising = unvisitedNodes.remove();
-         logger.info("Visiting node: {} ", mostPromising);
+         logger.debug("A* Search is visiting node: {} ", mostPromising);
 
          List<Node> childNodes = mostPromising.getChildNodes();
-         logger.info("Node has {} children", childNodes.size());
+         logger.debug("Node has {} children", childNodes.size());
          for (Node child : childNodes) {
             if (child.isSolution()) {
-               logger.info("Solution found: {}", child);
+               logger.debug("A* search found solution: {}", child);
                return child;
             } else if (!isAlreadyInListWithLowerCost(child, unvisitedNodes)
                   && !isAlreadyInListWithLowerCost(child, visitedNodes)) {
@@ -51,7 +51,7 @@ public class ASearchAlgorithm {
          visitedNodes.add(mostPromising);
       }
 
-      logger.info("No solution found");
+      logger.debug("A* Search found no solution");
       return null;
    }
 
