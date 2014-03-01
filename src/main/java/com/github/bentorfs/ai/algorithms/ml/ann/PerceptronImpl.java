@@ -1,4 +1,4 @@
-package com.github.bentorfs.ai.algorithms.ml.ann.perceptron;
+package com.github.bentorfs.ai.algorithms.ml.ann;
 
 import java.util.ArrayList;
 import java.util.List;

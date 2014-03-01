@@ -5,7 +5,10 @@ import java.util.Arrays;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.github.bentorfs.ai.algorithms.ml.ann.perceptron.PerceptronLearner.PerceptronTrainingStrategy;
+import com.github.bentorfs.ai.algorithms.ml.ann.Perceptron;
+import com.github.bentorfs.ai.algorithms.ml.ann.PerceptronImpl;
+import com.github.bentorfs.ai.algorithms.ml.ann.PerceptronLearner;
+import com.github.bentorfs.ai.algorithms.ml.ann.PerceptronLearner.PerceptronTrainingStrategy;
 import com.github.bentorfs.ai.common.FunctionLearner;
 
 public class PerceptronLearnerTest {

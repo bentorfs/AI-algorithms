@@ -2,12 +2,14 @@ package com.github.bentorfs.ai.algorithms.search.asearch;
 
 import java.util.List;
 
+import com.github.bentorfs.ai.common.TreeNode;
+
 /**
  * Represents a node in the search space
  * 
  * @author betorfs
  */
-public abstract class Node implements Comparable<Node> {
+public abstract class AStarSearchNode implements Comparable<AStarSearchNode>, TreeNode {
 
    /*
     * Cache of the total cost, so it does not have to be re-calculated every time
@@ -17,12 +19,14 @@ public abstract class Node implements Comparable<Node> {
    /**
     * Returns all nodes that are accessible from this node
     */
-   public abstract List<Node> getChildNodes();
+   @Override
+   public abstract List<TreeNode> getChildNodes();
 
    /**
     * Returns whether this node represents a solution in the search space
     */
-   public abstract boolean isSolution();
+   @Override
+   public abstract boolean isSolutionNode();
 
    /**
     * Returns the cost that was needed to reach this node
@@ -43,7 +47,8 @@ public abstract class Node implements Comparable<Node> {
     * 
     * - The estimated cost to reach a solution (getEstimatedCostToSolution)
     */
-   public int getTotalCost() {
+   @Override
+   public double getValue() {
       if (totalCost == -1) {
          totalCost = getCostSoFar() + getEstimatedCostToSolution();
       }
@@ -54,15 +59,15 @@ public abstract class Node implements Comparable<Node> {
     * Comparison between nodes is done using the total cost
     */
    @Override
-   public int compareTo(Node o) {
-      int x = getTotalCost();
-      int y = o.getTotalCost();
+   public int compareTo(AStarSearchNode o) {
+      double x = getValue();
+      double y = o.getValue();
       return (x < y) ? -1 : ((x == y) ? 0 : 1);
    }
 
    /**
     * Returns whether this node represents the same place in the search space as the given node
     */
-   public abstract boolean isSamePosition(Node o);
+   public abstract boolean isSamePosition(AStarSearchNode o);
 
 }

@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import com.github.bentorfs.ai.algorithms.search.minimax.MiniMaxNode;
 import com.github.bentorfs.ai.algorithms.search.minimax.tictactoe.TicTacToeBoard.Coordinate;
+import com.github.bentorfs.ai.common.TreeNode;
 
-public class TicTacToeNode implements MiniMaxNode {
+public class TicTacToeNode implements TreeNode {
 
    private boolean myTurn;
 
@@ -24,8 +24,8 @@ public class TicTacToeNode implements MiniMaxNode {
    }
 
    @Override
-   public Collection<MiniMaxNode> getPossibleMoves() {
-      List<MiniMaxNode> result = new ArrayList<>();
+   public Collection<TreeNode> getChildNodes() {
+      List<TreeNode> result = new ArrayList<>();
       for (Coordinate emptyBox : board.getEmptyBoxes()) {
          // Put a TRUE
          TicTacToeBoard boardWithTrue = new TicTacToeBoard(board);
@@ -43,12 +43,12 @@ public class TicTacToeNode implements MiniMaxNode {
    }
 
    @Override
-   public boolean isEndNode() {
+   public boolean isSolutionNode() {
       return board.hasWinner() || (board.getEmptyBoxes().size() == 0);
    }
 
    @Override
-   public double getDesirability() {
+   public double getValue() {
       if (board.hasWinner() && myTurn) {
          return -1; // I lost
       } else if (board.hasWinner() && !myTurn) {

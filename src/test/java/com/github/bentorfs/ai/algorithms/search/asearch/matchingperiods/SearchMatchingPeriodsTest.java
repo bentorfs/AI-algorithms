@@ -11,7 +11,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.github.bentorfs.ai.algorithms.search.asearch.ASearchAlgorithm;
-import com.github.bentorfs.ai.algorithms.search.asearch.Node;
+import com.github.bentorfs.ai.algorithms.search.asearch.AStarSearchNode;
 
 /**
  * 
@@ -27,8 +27,8 @@ public class SearchMatchingPeriodsTest {
 
       ASearchAlgorithm algo = new ASearchAlgorithm();
 
-      Node startNode = new PeriodMatchNode(unlinkedPeriods, new LinkedList<Period>());
-      Node solution = algo.searchSolution(startNode);
+      AStarSearchNode startNode = new PeriodMatchNode(unlinkedPeriods, new LinkedList<Period>());
+      AStarSearchNode solution = algo.searchSolution(startNode);
 
       Assert.assertNull(solution);
    }
@@ -41,8 +41,8 @@ public class SearchMatchingPeriodsTest {
 
       ASearchAlgorithm algo = new ASearchAlgorithm();
 
-      Node startNode = new PeriodMatchNode(unlinkedPeriods, new LinkedList<Period>());
-      Node solution = algo.searchSolution(startNode);
+      AStarSearchNode startNode = new PeriodMatchNode(unlinkedPeriods, new LinkedList<Period>());
+      AStarSearchNode solution = algo.searchSolution(startNode);
 
       Assert.assertNotNull(solution);
       PeriodMatchNode s = (PeriodMatchNode) solution;
@@ -59,8 +59,8 @@ public class SearchMatchingPeriodsTest {
 
       ASearchAlgorithm algo = new ASearchAlgorithm();
 
-      Node startNode = new PeriodMatchNode(unlinkedPeriods, new LinkedList<Period>());
-      Node solution = algo.searchSolution(startNode);
+      AStarSearchNode startNode = new PeriodMatchNode(unlinkedPeriods, new LinkedList<Period>());
+      AStarSearchNode solution = algo.searchSolution(startNode);
 
       Assert.assertNotNull(solution);
       PeriodMatchNode s = (PeriodMatchNode) solution;
@@ -78,8 +78,8 @@ public class SearchMatchingPeriodsTest {
 
       ASearchAlgorithm algo = new ASearchAlgorithm();
 
-      Node startNode = new PeriodMatchNode(unlinkedPeriods, new LinkedList<Period>());
-      Node solution = algo.searchSolution(startNode);
+      AStarSearchNode startNode = new PeriodMatchNode(unlinkedPeriods, new LinkedList<Period>());
+      AStarSearchNode solution = algo.searchSolution(startNode);
 
       Assert.assertNotNull(solution);
       PeriodMatchNode s = (PeriodMatchNode) solution;
@@ -101,8 +101,8 @@ public class SearchMatchingPeriodsTest {
 
       ASearchAlgorithm algo = new ASearchAlgorithm();
 
-      Node startNode = new PeriodMatchNode(unlinkedPeriods, new LinkedList<Period>());
-      Node solution = algo.searchSolution(startNode);
+      AStarSearchNode startNode = new PeriodMatchNode(unlinkedPeriods, new LinkedList<Period>());
+      AStarSearchNode solution = algo.searchSolution(startNode);
 
       Assert.assertNotNull(solution);
       PeriodMatchNode s = (PeriodMatchNode) solution;
@@ -129,8 +129,8 @@ public class SearchMatchingPeriodsTest {
 
       ASearchAlgorithm algo = new ASearchAlgorithm();
 
-      Node startNode = new PeriodMatchNode(periods, new LinkedList<Period>());
-      Node solution = algo.searchSolution(startNode);
+      AStarSearchNode startNode = new PeriodMatchNode(periods, new LinkedList<Period>());
+      AStarSearchNode solution = algo.searchSolution(startNode);
 
       System.out.println("Number of input periods: " + size);
       Assert.assertNotNull(solution);

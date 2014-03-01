@@ -3,14 +3,15 @@ package com.github.bentorfs.ai.algorithms.search.asearch.matchingperiods;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.github.bentorfs.ai.algorithms.search.asearch.Node;
+import com.github.bentorfs.ai.algorithms.search.asearch.AStarSearchNode;
+import com.github.bentorfs.ai.common.TreeNode;
 
 /**
  * 
  * 
  * @author betorfs
  */
-public class PeriodMatchNode extends Node {
+public class PeriodMatchNode extends AStarSearchNode {
 
    private List<Period> unlinkedPeriods;
    private List<Period> linkedPeriods;
@@ -23,8 +24,8 @@ public class PeriodMatchNode extends Node {
 
    /** {@inheritDoc} */
    @Override
-   public List<Node> getChildNodes() {
-      List<Node> result = new LinkedList<>();
+   public List<TreeNode> getChildNodes() {
+      List<TreeNode> result = new LinkedList<>();
       for (int i = 0; i < unlinkedPeriods.size(); i++) {
          Period periodI = unlinkedPeriods.get(i);
          for (int j = i + 1; j < unlinkedPeriods.size(); j++) {
@@ -41,7 +42,7 @@ public class PeriodMatchNode extends Node {
                List<Period> linkedPeriodsForChild = new LinkedList<>(linkedPeriods);
                linkedPeriodsForChild.add(overlappingPeriod);
 
-               Node child = new PeriodMatchNode(unlinkedPeriodsForChild, linkedPeriodsForChild);
+               AStarSearchNode child = new PeriodMatchNode(unlinkedPeriodsForChild, linkedPeriodsForChild);
                result.add(child);
             }
          }
@@ -51,7 +52,7 @@ public class PeriodMatchNode extends Node {
 
    /** {@inheritDoc} */
    @Override
-   public boolean isSolution() {
+   public boolean isSolutionNode() {
       // Let's say it is a solution if more than X % of days is linked
       double percentageOfLinkedDays = getPercentageOfLinkedDays();
       if (percentageOfLinkedDays > 0.95) {
@@ -98,7 +99,7 @@ public class PeriodMatchNode extends Node {
 
    /** {@inheritDoc} */
    @Override
-   public boolean isSamePosition(Node o) {
+   public boolean isSamePosition(AStarSearchNode o) {
       return false;
    }
 

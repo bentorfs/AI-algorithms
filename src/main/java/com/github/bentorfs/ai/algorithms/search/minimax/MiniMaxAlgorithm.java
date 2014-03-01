@@ -5,6 +5,8 @@ import java.util.Collection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.github.bentorfs.ai.common.TreeNode;
+
 /**
  * Minimax algorithm.
  * 
@@ -28,24 +30,24 @@ public class MiniMaxAlgorithm {
       this.searchDepth = searchDepth;
    }
 
-   public MiniMaxNode getBestMove(MiniMaxNode currentPosition) {
+   public TreeNode getBestMove(TreeNode currentPosition) {
       return getBestMove(currentPosition, searchDepth);
    }
 
-   private MiniMaxNode getBestMove(MiniMaxNode currentPosition, int levelsLeft) {
+   private TreeNode getBestMove(TreeNode currentPosition, int levelsLeft) {
       logger.debug("Finding best move, starting from position: {}", currentPosition);
 
-      MiniMaxNode result = null;
-      if (currentPosition.isEndNode() || levelsLeft == 0) {
+      TreeNode result = null;
+      if (currentPosition.isSolutionNode() || levelsLeft == 0) {
          return currentPosition;
       }
       // Generate all moves from the current position
-      Collection<MiniMaxNode> possibleMoves = currentPosition.getPossibleMoves();
+      Collection<TreeNode> possibleMoves = currentPosition.getChildNodes();
       double highestDesirability = Double.NEGATIVE_INFINITY;
-      for (MiniMaxNode possibleMove : possibleMoves) {
-         MiniMaxNode worstMove = getWorstMove(possibleMove, levelsLeft - 1);
+      for (TreeNode possibleMove : possibleMoves) {
+         TreeNode worstMove = getWorstMove(possibleMove, levelsLeft - 1);
          if (worstMove != null) {
-            double desirability = worstMove.getDesirability();
+            double desirability = worstMove.getValue();
             if (desirability > highestDesirability) {
                highestDesirability = desirability;
                result = possibleMove;
@@ -55,20 +57,20 @@ public class MiniMaxAlgorithm {
       return result;
    }
 
-   private MiniMaxNode getWorstMove(MiniMaxNode currentPosition, int levelsLeft) {
+   private TreeNode getWorstMove(TreeNode currentPosition, int levelsLeft) {
       logger.debug("Finding worst move, starting from position: {}", currentPosition);
 
-      MiniMaxNode result = null;
-      if (currentPosition.isEndNode() || levelsLeft == 0) {
+      TreeNode result = null;
+      if (currentPosition.isSolutionNode() || levelsLeft == 0) {
          return currentPosition;
       }
       // Generate all moves from the current position
-      Collection<MiniMaxNode> possibleMoves = currentPosition.getPossibleMoves();
+      Collection<TreeNode> possibleMoves = currentPosition.getChildNodes();
       double lowestDesirability = Double.POSITIVE_INFINITY;
-      for (MiniMaxNode possibleMove : possibleMoves) {
-         MiniMaxNode bestMove = getBestMove(possibleMove, levelsLeft - 1);
+      for (TreeNode possibleMove : possibleMoves) {
+         TreeNode bestMove = getBestMove(possibleMove, levelsLeft - 1);
          if (bestMove != null) {
-            double desirability = bestMove.getDesirability();
+            double desirability = bestMove.getValue();
             if (desirability < lowestDesirability) {
                lowestDesirability = desirability;
                result = possibleMove;

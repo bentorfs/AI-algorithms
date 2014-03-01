@@ -4,7 +4,8 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.github.bentorfs.ai.algorithms.search.asearch.Node;
+import com.github.bentorfs.ai.algorithms.search.asearch.AStarSearchNode;
+import com.github.bentorfs.ai.common.TreeNode;
 import com.github.bentorfs.ai.testutilities.mazes.Maze;
 import com.github.bentorfs.ai.testutilities.mazes.MazeCoordinate;
 
@@ -13,7 +14,7 @@ import com.github.bentorfs.ai.testutilities.mazes.MazeCoordinate;
  * 
  * @author betorfs
  */
-public class MazeNode extends Node {
+public class MazeNode extends AStarSearchNode {
 
    private Maze maze;
 
@@ -34,8 +35,8 @@ public class MazeNode extends Node {
 
    /** {@inheritDoc} */
    @Override
-   public List<Node> getChildNodes() {
-      List<Node> result = new LinkedList<>();
+   public List<TreeNode> getChildNodes() {
+      List<TreeNode> result = new LinkedList<>();
       Collection<MazeCoordinate> placesToGo = maze.getPlacesToGoFrom(positionInMaze);
       for (MazeCoordinate coord : placesToGo) {
          List<MazeCoordinate> newSteps = new LinkedList<>(steps);
@@ -47,7 +48,7 @@ public class MazeNode extends Node {
 
    /** {@inheritDoc} */
    @Override
-   public boolean isSolution() {
+   public boolean isSolutionNode() {
       return maze.getEndPosition().equals(positionInMaze);
    }
 
@@ -65,7 +66,7 @@ public class MazeNode extends Node {
 
    /** {@inheritDoc} */
    @Override
-   public boolean isSamePosition(Node o) {
+   public boolean isSamePosition(AStarSearchNode o) {
       if (o instanceof MazeNode) {
          return positionInMaze.equals(((MazeNode) o).getPositionInMaze());
       }

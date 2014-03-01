@@ -9,6 +9,8 @@ import java.util.Queue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.github.bentorfs.ai.common.TreeNode;
+
 /**
  * 
  * 
@@ -23,26 +25,26 @@ public class ASearchAlgorithm {
     * 
     * Returns null if no solution could be found
     */
-   public Node searchSolution(Node startNode) {
+   public AStarSearchNode searchSolution(AStarSearchNode startNode) {
       logger.debug("Starting A* search");
 
       // This queue will contain the nodes we have not yet visited, ordered by cost from low to high
-      Queue<Node> unvisitedNodes = new PriorityQueue<>();
+      Queue<TreeNode> unvisitedNodes = new PriorityQueue<>();
       unvisitedNodes.add(startNode);
 
       // This list will contain all the nodes we have visited so far
-      List<Node> visitedNodes = new LinkedList<>();
+      List<TreeNode> visitedNodes = new LinkedList<>();
 
       while (!unvisitedNodes.isEmpty()) {
-         Node mostPromising = unvisitedNodes.remove();
+         TreeNode mostPromising = unvisitedNodes.remove();
          logger.debug("A* Search is visiting node: {} ", mostPromising);
 
-         List<Node> childNodes = mostPromising.getChildNodes();
+         Collection<TreeNode> childNodes = mostPromising.getChildNodes();
          logger.debug("Node has {} children", childNodes.size());
-         for (Node child : childNodes) {
-            if (child.isSolution()) {
+         for (TreeNode child : childNodes) {
+            if (child.isSolutionNode()) {
                logger.debug("A* search found solution: {}", child);
-               return child;
+               return (AStarSearchNode) child;
             } else if (!isAlreadyInListWithLowerCost(child, unvisitedNodes)
                   && !isAlreadyInListWithLowerCost(child, visitedNodes)) {
                unvisitedNodes.add(child);
@@ -55,9 +57,11 @@ public class ASearchAlgorithm {
       return null;
    }
 
-   private boolean isAlreadyInListWithLowerCost(Node candidate, Collection<Node> nodes) {
-      for (Node node : nodes) {
-         if (node.isSamePosition(candidate) && node.getTotalCost() <= candidate.getTotalCost()) {
+   private boolean isAlreadyInListWithLowerCost(TreeNode candidate, Collection<TreeNode> nodes) {
+      for (TreeNode node : nodes) {
+         AStarSearchNode searchNode = (AStarSearchNode) node;
+         AStarSearchNode candidateNode = (AStarSearchNode) candidate;
+         if (searchNode.isSamePosition(candidateNode) && searchNode.getValue() <= candidateNode.getValue()) {
             return true;
          }
       }

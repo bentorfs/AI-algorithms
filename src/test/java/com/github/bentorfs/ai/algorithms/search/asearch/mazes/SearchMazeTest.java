@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.github.bentorfs.ai.algorithms.search.asearch.ASearchAlgorithm;
-import com.github.bentorfs.ai.algorithms.search.asearch.Node;
+import com.github.bentorfs.ai.algorithms.search.asearch.AStarSearchNode;
 import com.github.bentorfs.ai.testutilities.mazes.Maze;
 import com.github.bentorfs.ai.testutilities.mazes.MazeFactory;
 
@@ -21,8 +21,8 @@ public class SearchMazeTest {
 
       ASearchAlgorithm algo = new ASearchAlgorithm();
 
-      Node startNode = new MazeNode(maze);
-      Node solution = algo.searchSolution(startNode);
+      AStarSearchNode startNode = new MazeNode(maze);
+      AStarSearchNode solution = algo.searchSolution(startNode);
 
       Assert.assertNull(solution);
    }
@@ -38,11 +38,11 @@ public class SearchMazeTest {
 
       ASearchAlgorithm algo = new ASearchAlgorithm();
 
-      Node startNode = new MazeNode(maze);
-      Node solution = algo.searchSolution(startNode);
+      AStarSearchNode startNode = new MazeNode(maze);
+      AStarSearchNode solution = algo.searchSolution(startNode);
 
       Assert.assertNotNull(solution);
-      Assert.assertEquals(5, solution.getTotalCost());
+      Assert.assertEquals(5, solution.getValue(), 0);
    }
 
    @Test
@@ -51,11 +51,11 @@ public class SearchMazeTest {
 
       ASearchAlgorithm algo = new ASearchAlgorithm();
 
-      Node startNode = new MazeNode(maze);
-      Node solution = algo.searchSolution(startNode);
+      AStarSearchNode startNode = new MazeNode(maze);
+      AStarSearchNode solution = algo.searchSolution(startNode);
 
       Assert.assertNotNull(solution);
-      Assert.assertEquals(5, solution.getTotalCost());
+      Assert.assertEquals(5, solution.getValue(), 0);
    }
 
    @Test
@@ -64,11 +64,11 @@ public class SearchMazeTest {
 
       ASearchAlgorithm algo = new ASearchAlgorithm();
 
-      Node startNode = new MazeNode(maze);
-      Node solution = algo.searchSolution(startNode);
+      AStarSearchNode startNode = new MazeNode(maze);
+      AStarSearchNode solution = algo.searchSolution(startNode);
 
       Assert.assertNotNull(solution);
-      Assert.assertEquals(25, solution.getTotalCost());
+      Assert.assertEquals(25, solution.getValue(), 0);
 
       System.out.println(((MazeNode) solution).toString());
    }
