@@ -13,13 +13,13 @@ import com.github.bentorfs.ai.common.FunctionLearner;
 public class PerceptronLearner implements FunctionLearner<Double, Double> {
 
    private double learningRate = 0.1;
-   private Perceptron perceptron;
+   private NetworkUnit perceptron;
    private PerceptronTrainingStrategy strategy = PerceptronTrainingStrategy.delta_rule;
 
    /**
     * Instantiates a perceptron learner using the default values for the learning rate (0.1) and strategy (delta rule)
     */
-   public PerceptronLearner(Perceptron perceptron) {
+   public PerceptronLearner(NetworkUnit perceptron) {
       super();
       this.perceptron = perceptron;
    }
@@ -27,7 +27,7 @@ public class PerceptronLearner implements FunctionLearner<Double, Double> {
    /**
     * Instantiates a perceptron learning using the given values for the learning rate and strategy
     */
-   public PerceptronLearner(Perceptron perceptron, PerceptronTrainingStrategy strategy, double learningRate) {
+   public PerceptronLearner(NetworkUnit perceptron, PerceptronTrainingStrategy strategy, double learningRate) {
       super();
       this.perceptron = perceptron;
       this.strategy = strategy;
@@ -37,17 +37,15 @@ public class PerceptronLearner implements FunctionLearner<Double, Double> {
    /** {@inheritDoc} */
    @Override
    public Double predictValue(List<Double> attributes) {
-      return perceptron.getRealValue(attributes);
+      return perceptron.getValue(attributes);
    }
 
    /** {@inheritDoc} */
    @Override
    public void showExample(Double targetValue, List<Double> attributes) {
-      double currentValue;
+      double currentValue = perceptron.getValue(attributes);
       if (PerceptronTrainingStrategy.perceptron_rule.equals(strategy)) {
-         currentValue = perceptron.getBinaryValue(attributes);
-      } else {
-         currentValue = perceptron.getRealValue(attributes);
+         currentValue = getBinaryValue(currentValue);
       }
 
       List<Double> weights = perceptron.getWeights();
@@ -60,6 +58,14 @@ public class PerceptronLearner implements FunctionLearner<Double, Double> {
       double delta = learningRate * (targetValue - currentValue);
       double currentWeight = perceptron.getConstantInputWeight();
       perceptron.setConstantInputWeight(currentWeight + delta);
+   }
+
+   public int getBinaryValue(double realValue) {
+      if (realValue > 0) {
+         return 1;
+      } else {
+         return -1;
+      }
    }
 
    public static enum PerceptronTrainingStrategy {

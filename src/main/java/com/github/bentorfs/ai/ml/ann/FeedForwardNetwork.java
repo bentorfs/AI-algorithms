@@ -1,48 +1,36 @@
 package com.github.bentorfs.ai.ml.ann;
 
-import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Actually just a multi-layer perceptron, as it is fully interconnected.
- * 
- * TODO: Support non-fully interconnected feedforward networks
+ * Represents a neural network architecture without any feedback loops
  * 
  * @author betorfs
  * 
  */
-public class FeedForwardNetwork {
+public interface FeedForwardNetwork {
 
-   private List<NetworkLayer> layers = new LinkedList<>();
+   /**
+    * Returns the network value for the given input values.
+    */
+   public List<Double> getOutput(List<Double> attributes);
 
-   public FeedForwardNetwork(int nbOfInputs, int... unitsPerLayer) {
-      int nbOfInputsForLayer = nbOfInputs;
-      for (int i = 0; i < unitsPerLayer.length; i++) {
-         layers.add(new NetworkLayer(unitsPerLayer[i], nbOfInputsForLayer));
-         nbOfInputsForLayer = unitsPerLayer[i];
-      }
-   }
+   /**
+    * Returns the number of layers in the network
+    */
+   public int getNbOfLayers();
 
-   public List<Double> getOutput(List<Double> inputs) {
-      return getOutputAtLayer(inputs, layers.size());
-   }
+   /**
+    * Returns the internal network representation for the given input values, at the given layer
+    */
+   public List<Double> getOutputAtLayer(List<Double> attributes, int layer);
 
-   public List<Double> getOutputAtLayer(List<Double> inputs, int layerNb) {
-      List<Double> inputsForLayer = inputs;
-      for (int i = 0; i < layerNb; i++) {
-         NetworkLayer layer = layers.get(i);
-         List<Double> outputsForLayer = layer.getOutput(inputsForLayer);
-         inputsForLayer = outputsForLayer;
-      }
-      return inputsForLayer;
-   }
-
-   public int getNbOfLayers() {
-      return layers.size();
-   }
-
-   public NetworkLayer getLayer(int i) {
-      return layers.get(i - 1);
-   }
+   /**
+    * Returns the layer representation at the given index. Indices start at 1 for the first layer. Index 0 is used
+    * internally to represent the input layer.
+    * 
+    * The NetworkLayer provides access to the network internals, such as the units, interconnections, and weights
+    */
+   public NetworkLayer getLayer(int index);
 
 }

@@ -5,28 +5,28 @@ import java.util.List;
 
 public class NetworkLayer {
 
-   private List<Perceptron> units = new ArrayList<>();
+   private List<NetworkUnit> units = new ArrayList<>();
 
    public NetworkLayer(int sizeOfLayer, int nbOfInputs) {
       for (int i = 0; i < sizeOfLayer; i++) {
-         units.add(new PerceptronImpl(nbOfInputs));
+         units.add(new SigmoidUnit(nbOfInputs));
       }
    }
 
    public List<Double> getOutput(List<Double> inputs) {
       List<Double> outputs = new ArrayList<>();
-      for (Perceptron unit : units) {
+      for (NetworkUnit unit : units) {
          if (inputs.size() != unit.getWeights().size()) {
             throw new RuntimeException(
                   "Mismatch between the number of inputs and the number of inputs to the unit in the network layer");
          }
-         double unitOutput = unit.getRealValue(inputs);
+         double unitOutput = unit.getValue(inputs);
          outputs.add(unitOutput);
       }
       return outputs;
    }
 
-   public Perceptron getUnit(int i) {
+   public NetworkUnit getUnit(int i) {
       return units.get(i);
    }
 

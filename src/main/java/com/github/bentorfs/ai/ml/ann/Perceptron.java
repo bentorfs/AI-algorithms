@@ -1,28 +1,95 @@
 package com.github.bentorfs.ai.ml.ann;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
- * 
+ * Simple, linear perceptron.
  * 
  * @author betorfs
  */
-public interface Perceptron {
+public class Perceptron implements NetworkUnit {
 
-   public double getRealValue(List<Double> inputs);
+   protected List<Double> weights;
 
-   public int getBinaryValue(List<Double> inputs);
+   protected Double constantInputWeight;
 
-   public double getWeight(int index);
+   /**
+    * Creates a new perceptron using the given weights
+    */
+   public Perceptron(Double constantInputWeight, List<Double> weights) {
+      this.constantInputWeight = constantInputWeight;
+      this.weights = weights;
+   }
 
-   public void setWeight(int index, double newWeight);
+   /**
+    * Creates a new perceptron, initialized with random weights between 0 and 1.
+    */
+   public Perceptron(int nbOfInputs) {
+      weights = new ArrayList<>(nbOfInputs);
+      Random random = new Random();
+      for (int i = 0; i < nbOfInputs; i++) {
+         weights.add(i, getRandomValueBetween(random, -0.05, 0.05));
+      }
+      constantInputWeight = getRandomValueBetween(random, -0.05, 0.05);
+   }
 
-   public double getConstantInputWeight();
+   /** {@inheritDoc} */
+   @Override
+   public double getValue(List<Double> inputs) {
+      if (inputs.size() != weights.size()) {
+         throw new RuntimeException("Expecting " + (weights.size() - 1) + " inputs, but received " + inputs.size() + " inputs");
+      }
+      double result = 0d;
+      for (int i = 0; i < inputs.size(); i++) {
+         result = result + (weights.get(i) * inputs.get(i));
+      }
+      // Add the constant input
+      result = result + constantInputWeight;
+      return activationFunction(result);
+   }
 
-   public void setConstantInputWeight(double weight);
+   @Override
+   public double getConstantInputWeight() {
+      return constantInputWeight;
+   }
 
-   public List<Double> getWeights();
+   @Override
+   public void setConstantInputWeight(double constantInputWeight) {
+      this.constantInputWeight = constantInputWeight;
+   }
 
-   public void setWeights(List<Double> newWeights);
+   /** {@inheritDoc} */
+   @Override
+   public List<Double> getWeights() {
+      return new ArrayList<Double>(weights);
+   }
+
+   /** {@inheritDoc} */
+   @Override
+   public double getWeight(int index) {
+      return weights.get(index);
+   }
+
+   @Override
+   public void setWeight(int index, double newWeight) {
+      weights.set(index, newWeight);
+   }
+
+   @Override
+   public void setWeights(List<Double> newWeights) {
+      weights = new ArrayList<>(newWeights);
+   }
+
+   protected Double activationFunction(double inputValue) {
+      return inputValue; // Linear activation function
+   }
+
+   private Double getRandomValueBetween(Random random, double min, double max) {
+      double positiveMax = Math.abs(max) + Math.abs(min);
+      double positiveRandom = positiveMax * random.nextDouble();
+      return positiveRandom - Math.abs(min);
+   }
 
 }
