@@ -50,7 +50,7 @@ public class TicTacToeTest {
 
    @Test
    public void playTicTacToeFromTheStart() {
-      MiniMaxAlgorithm algo = new MiniMaxAlgorithm(4);
+      MiniMaxAlgorithm algo = new MiniMaxAlgorithm(5);
       TicTacToeNode startPosition = new TicTacToeNode();
 
       TicTacToeNode bestMove = (TicTacToeNode) algo.getBestMove(startPosition);

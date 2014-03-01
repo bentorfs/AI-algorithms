@@ -8,9 +8,7 @@ import org.slf4j.LoggerFactory;
 import com.github.bentorfs.ai.common.TreeNode;
 
 /**
- * Minimax algorithm.
- * 
- * TODO: Implement alpha-beta pruning
+ * Minimax algorithm, with support for alpha-beta pruning and a limited search depth.
  * 
  * @author betorfs
  */
@@ -31,10 +29,10 @@ public class MiniMaxAlgorithm {
    }
 
    public TreeNode getBestMove(TreeNode currentPosition) {
-      return getBestMove(currentPosition, searchDepth);
+      return getBestMove(currentPosition, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, searchDepth);
    }
 
-   private TreeNode getBestMove(TreeNode currentPosition, int levelsLeft) {
+   private TreeNode getBestMove(TreeNode currentPosition, double alpha, double beta, int levelsLeft) {
       logger.debug("Finding best move, starting from position: {}", currentPosition);
 
       TreeNode result = null;
@@ -43,21 +41,23 @@ public class MiniMaxAlgorithm {
       }
       // Generate all moves from the current position
       Collection<TreeNode> possibleMoves = currentPosition.getChildNodes();
-      double highestDesirability = Double.NEGATIVE_INFINITY;
       for (TreeNode possibleMove : possibleMoves) {
-         TreeNode worstMove = getWorstMove(possibleMove, levelsLeft - 1);
+         TreeNode worstMove = getWorstMove(possibleMove, alpha, beta, levelsLeft - 1);
          if (worstMove != null) {
             double desirability = worstMove.getValue();
-            if (desirability > highestDesirability) {
-               highestDesirability = desirability;
+            if (desirability > alpha) {
+               alpha = desirability;
                result = possibleMove;
+            }
+            if (alpha >= beta) {
+               break;
             }
          }
       }
       return result;
    }
 
-   private TreeNode getWorstMove(TreeNode currentPosition, int levelsLeft) {
+   private TreeNode getWorstMove(TreeNode currentPosition, double alpha, double beta, int levelsLeft) {
       logger.debug("Finding worst move, starting from position: {}", currentPosition);
 
       TreeNode result = null;
@@ -66,14 +66,16 @@ public class MiniMaxAlgorithm {
       }
       // Generate all moves from the current position
       Collection<TreeNode> possibleMoves = currentPosition.getChildNodes();
-      double lowestDesirability = Double.POSITIVE_INFINITY;
       for (TreeNode possibleMove : possibleMoves) {
-         TreeNode bestMove = getBestMove(possibleMove, levelsLeft - 1);
+         TreeNode bestMove = getBestMove(possibleMove, alpha, beta, levelsLeft - 1);
          if (bestMove != null) {
             double desirability = bestMove.getValue();
-            if (desirability < lowestDesirability) {
-               lowestDesirability = desirability;
+            if (desirability < beta) {
+               beta = desirability;
                result = possibleMove;
+            }
+            if (alpha >= beta) {
+               break;
             }
          }
       }
