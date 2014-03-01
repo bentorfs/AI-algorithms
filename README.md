@@ -24,3 +24,8 @@ Reinforcement learning
 Graph algorithms
 ------------------------
 * A* search
+
+Game playing
+------------------------
+* Minimax
+ * Alpha-beta pruning
