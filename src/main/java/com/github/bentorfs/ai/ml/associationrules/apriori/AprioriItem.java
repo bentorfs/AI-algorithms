@@ -7,12 +7,12 @@ package com.github.bentorfs.ai.ml.associationrules.apriori;
  * 
  * @author betorfs
  */
-public interface Item extends Comparable<Item> {
+public interface AprioriItem extends Comparable<AprioriItem> {
 
    /**
     * Return if this item is compatible with an other item: if false, this item cannot be in the same itemset as the
     * other item
     */
-   public boolean isCompatibleWith(Item item);
+   public boolean isCompatibleWith(AprioriItem item);
 
 }

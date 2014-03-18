@@ -10,9 +10,9 @@ import org.junit.Test;
 
 import com.github.bentorfs.ai.ml.associationrules.apriori.AprioriAlgorithm;
 import com.github.bentorfs.ai.ml.associationrules.apriori.AssociationRule;
-import com.github.bentorfs.ai.ml.associationrules.apriori.Item;
-import com.github.bentorfs.ai.ml.associationrules.apriori.ItemSet;
-import com.github.bentorfs.ai.ml.associationrules.apriori.Transaction;
+import com.github.bentorfs.ai.ml.associationrules.apriori.AprioriItem;
+import com.github.bentorfs.ai.ml.associationrules.apriori.AprioriItemSet;
+import com.github.bentorfs.ai.ml.associationrules.apriori.AprioriTransaction;
 
 /**
  * 
@@ -25,19 +25,19 @@ public class AprioriAlgorithmTest {
    public void testFrequentItemSets() {
       AprioriAlgorithm algo = new AprioriAlgorithm(100, 0.6d, 1d, 1d);
 
-      List<Transaction> transactions = new ArrayList<>();
-      Set<Item> items1 = getStringItems("M", "O", "N", "K", "E", "Y");
-      transactions.add(new Transaction(items1));
-      Set<Item> items2 = getStringItems("D", "O", "N", "K", "E", "Y");
-      transactions.add(new Transaction(items2));
-      Set<Item> items3 = getStringItems("M", "A", "K", "E");
-      transactions.add(new Transaction(items3));
-      Set<Item> items4 = getStringItems("M", "U", "C", "K", "Y");
-      transactions.add(new Transaction(items4));
-      Set<Item> items5 = getStringItems("C", "O", "O", "K", "I", "E");
-      transactions.add(new Transaction(items5));
+      List<AprioriTransaction> transactions = new ArrayList<>();
+      Set<AprioriItem> items1 = getStringItems("M", "O", "N", "K", "E", "Y");
+      transactions.add(new AprioriTransaction(items1));
+      Set<AprioriItem> items2 = getStringItems("D", "O", "N", "K", "E", "Y");
+      transactions.add(new AprioriTransaction(items2));
+      Set<AprioriItem> items3 = getStringItems("M", "A", "K", "E");
+      transactions.add(new AprioriTransaction(items3));
+      Set<AprioriItem> items4 = getStringItems("M", "U", "C", "K", "Y");
+      transactions.add(new AprioriTransaction(items4));
+      Set<AprioriItem> items5 = getStringItems("C", "O", "O", "K", "I", "E");
+      transactions.add(new AprioriTransaction(items5));
 
-      List<ItemSet> frequentItemSets = algo.getFrequentItemSets(transactions);
+      List<AprioriItemSet> frequentItemSets = algo.getFrequentItemSets(transactions);
 
       Assert.assertEquals("Wrong number of frequent itemsets returned", 11, frequentItemSets.size());
       Assert.assertEquals("Wrong number of frequent itemsets of size 1 returned", 5,
@@ -57,19 +57,19 @@ public class AprioriAlgorithmTest {
    public void testMaxSupport() {
       AprioriAlgorithm algo = new AprioriAlgorithm(100, 0.6d, 0.70d, 1d);
 
-      List<Transaction> transactions = new ArrayList<>();
-      Set<Item> items1 = getStringItems("M", "O", "N", "K", "E", "Y");
-      transactions.add(new Transaction(items1));
-      Set<Item> items2 = getStringItems("D", "O", "N", "K", "E", "Y");
-      transactions.add(new Transaction(items2));
-      Set<Item> items3 = getStringItems("M", "A", "K", "E");
-      transactions.add(new Transaction(items3));
-      Set<Item> items4 = getStringItems("M", "U", "C", "K", "Y");
-      transactions.add(new Transaction(items4));
-      Set<Item> items5 = getStringItems("C", "O", "O", "K", "I", "E");
-      transactions.add(new Transaction(items5));
+      List<AprioriTransaction> transactions = new ArrayList<>();
+      Set<AprioriItem> items1 = getStringItems("M", "O", "N", "K", "E", "Y");
+      transactions.add(new AprioriTransaction(items1));
+      Set<AprioriItem> items2 = getStringItems("D", "O", "N", "K", "E", "Y");
+      transactions.add(new AprioriTransaction(items2));
+      Set<AprioriItem> items3 = getStringItems("M", "A", "K", "E");
+      transactions.add(new AprioriTransaction(items3));
+      Set<AprioriItem> items4 = getStringItems("M", "U", "C", "K", "Y");
+      transactions.add(new AprioriTransaction(items4));
+      Set<AprioriItem> items5 = getStringItems("C", "O", "O", "K", "I", "E");
+      transactions.add(new AprioriTransaction(items5));
 
-      List<ItemSet> frequentItemSets = algo.getFrequentItemSets(transactions);
+      List<AprioriItemSet> frequentItemSets = algo.getFrequentItemSets(transactions);
 
       Assert.assertEquals("Wrong number of frequent itemsets returned", 3, frequentItemSets.size());
    }
@@ -78,9 +78,9 @@ public class AprioriAlgorithmTest {
    public void testWithEmptyTransactions() {
       AprioriAlgorithm algo = new AprioriAlgorithm(100, 0.6d, 1d, 1d);
 
-      List<Transaction> transactions = new ArrayList<>();
+      List<AprioriTransaction> transactions = new ArrayList<>();
 
-      List<ItemSet> frequentItemSets = algo.getFrequentItemSets(transactions);
+      List<AprioriItemSet> frequentItemSets = algo.getFrequentItemSets(transactions);
 
       Assert.assertEquals("Wrong number of frequent itemsets returned", 0, frequentItemSets.size());
 
@@ -89,9 +89,9 @@ public class AprioriAlgorithmTest {
 
    }
 
-   private Object getItemSetsOfSize(int i, List<ItemSet> frequentItemSets) {
+   private Object getItemSetsOfSize(int i, List<AprioriItemSet> frequentItemSets) {
       int count = 0;
-      for (ItemSet is : frequentItemSets) {
+      for (AprioriItemSet is : frequentItemSets) {
          if (is.getItems().size() == i) {
             count++;
          }
@@ -99,15 +99,15 @@ public class AprioriAlgorithmTest {
       return count;
    }
 
-   private Set<Item> getStringItems(String... strings) {
-      Set<Item> result = new HashSet<>();
+   private Set<AprioriItem> getStringItems(String... strings) {
+      Set<AprioriItem> result = new HashSet<>();
       for (String element : strings) {
          result.add(new StringItem(element));
       }
       return result;
    }
 
-   private static class StringItem implements Item {
+   private static class StringItem implements AprioriItem {
 
       private String value;
 
@@ -117,7 +117,7 @@ public class AprioriAlgorithmTest {
 
       /** {@inheritDoc} */
       @Override
-      public int compareTo(Item o) {
+      public int compareTo(AprioriItem o) {
          if (o instanceof StringItem) {
             return value.compareTo(((StringItem) o).getValue());
          } else {
@@ -127,7 +127,7 @@ public class AprioriAlgorithmTest {
 
       /** {@inheritDoc} */
       @Override
-      public boolean isCompatibleWith(Item item) {
+      public boolean isCompatibleWith(AprioriItem item) {
          return true;
       }
 

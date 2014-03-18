@@ -8,19 +8,19 @@ import java.util.Set;
  * 
  * @author betorfs
  */
-public class Transaction {
+public class AprioriTransaction {
 
-   private Set<Item> items = new HashSet<>();
+   private Set<AprioriItem> items = new HashSet<>();
 
-   public Transaction(Set<Item> items) {
+   public AprioriTransaction(Set<AprioriItem> items) {
       this.items = items;
    }
 
-   public Set<Item> getItems() {
+   public Set<AprioriItem> getItems() {
       return items;
    }
 
-   public void setItems(Set<Item> items) {
+   public void setItems(Set<AprioriItem> items) {
       this.items = items;
    }
 

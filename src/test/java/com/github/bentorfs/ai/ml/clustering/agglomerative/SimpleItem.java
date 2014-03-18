@@ -1,9 +1,9 @@
 package com.github.bentorfs.ai.ml.clustering.agglomerative;
 
-import com.github.bentorfs.ai.ml.clustering.agglomerative.Item;
+import com.github.bentorfs.ai.ml.clustering.agglomerative.ClusteringItem;
 
 
-public class SimpleItem extends Item {
+public class SimpleItem extends ClusteringItem {
 
    private double value;
 
@@ -13,7 +13,7 @@ public class SimpleItem extends Item {
 
    /** {@inheritDoc} */
    @Override
-   public double distanceTo(Item other) {
+   public double distanceTo(ClusteringItem other) {
       if (other instanceof SimpleItem) {
          return Math.abs(((SimpleItem) other).getValue() - value);
       } else {

@@ -10,15 +10,15 @@ import java.util.Set;
  */
 public class AssociationRule {
 
-   private Set<Item> conditions;
+   private Set<AprioriItem> conditions;
 
-   private Set<Item> output;
+   private Set<AprioriItem> output;
 
    private double confidence;
 
    private double support;
 
-   public AssociationRule(Set<Item> conditions, Set<Item> output, double support, double confidence) {
+   public AssociationRule(Set<AprioriItem> conditions, Set<AprioriItem> output, double support, double confidence) {
       this.conditions = conditions;
       this.output = output;
       this.support = support;

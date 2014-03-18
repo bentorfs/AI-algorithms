@@ -34,17 +34,17 @@ public class AprioriAlgorithm {
       this.maxItemSetSize = maxItemSetSize;
    }
 
-   public List<ItemSet> getFrequentItemSets(Collection<Transaction> transactions) {
-      List<ItemSet> frequentItemSetsOfAllSizes = new ArrayList<>();
+   public List<AprioriItemSet> getFrequentItemSets(Collection<AprioriTransaction> transactions) {
+      List<AprioriItemSet> frequentItemSetsOfAllSizes = new ArrayList<>();
 
-      Set<Item> allItems = getAllItems(transactions);
+      Set<AprioriItem> allItems = getAllItems(transactions);
 
       logger.debug("Generating frequent itemsets from " + transactions.size() + " transactions and " + allItems.size()
             + " different items");
 
-      List<ItemSet> candidateFrequentItemSets = getItemSetsOfSize1(allItems);
+      List<AprioriItemSet> candidateFrequentItemSets = getItemSetsOfSize1(allItems);
 
-      List<ItemSet> frequentItemSetsOfCurrentSize = null;
+      List<AprioriItemSet> frequentItemSetsOfCurrentSize = null;
       int currentSize = 1;
       do {
          frequentItemSetsOfCurrentSize = getFrequentItemSets(candidateFrequentItemSets, transactions);
@@ -63,14 +63,14 @@ public class AprioriAlgorithm {
    /**
     * Returns a list of itemsets that are frequent in the list of transactions
     */
-   private List<ItemSet> getFrequentItemSets(List<ItemSet> candidateItemSets, Collection<Transaction> transactions) {
+   private List<AprioriItemSet> getFrequentItemSets(List<AprioriItemSet> candidateItemSets, Collection<AprioriTransaction> transactions) {
       logger.debug("Selecting frequent itemsets from " + candidateItemSets.size() + " candidates");
-      List<ItemSet> result = new ArrayList<>();
+      List<AprioriItemSet> result = new ArrayList<>();
 
-      for (ItemSet itemSet : candidateItemSets) {
+      for (AprioriItemSet itemSet : candidateItemSets) {
          double nbOfMatchingTx = 0;
-         for (Transaction t : transactions) {
-            Set<Item> items = t.getItems();
+         for (AprioriTransaction t : transactions) {
+            Set<AprioriItem> items = t.getItems();
             if (items.containsAll(itemSet.getItems())) {
                nbOfMatchingTx++;
             }
@@ -88,24 +88,24 @@ public class AprioriAlgorithm {
    /**
     * Generate candidate frequent itemsets of size N, based on the frequent item sets of size N-1
     */
-   private List<ItemSet> getCandidateItemSets(List<ItemSet> smallerFrequentItemSets, int currentSize) {
+   private List<AprioriItemSet> getCandidateItemSets(List<AprioriItemSet> smallerFrequentItemSets, int currentSize) {
       logger.debug("Generating candidate frequent itemsets of size " + currentSize + " from itemsets of size "
             + (currentSize - 1));
-      List<ItemSet> candidates = new ArrayList<>();
+      List<AprioriItemSet> candidates = new ArrayList<>();
 
       for (int i = 0; i < smallerFrequentItemSets.size(); i++) {
-         ItemSet firstSet = smallerFrequentItemSets.get(i);
+         AprioriItemSet firstSet = smallerFrequentItemSets.get(i);
          for (int j = i + 1; j < smallerFrequentItemSets.size(); j++) {
-            ItemSet secondSet = smallerFrequentItemSets.get(j);
+            AprioriItemSet secondSet = smallerFrequentItemSets.get(j);
 
-            TreeSet<Item> itemsInFirstSet = firstSet.getItems();
-            Item lastFromSet1 = itemsInFirstSet.pollLast();
+            TreeSet<AprioriItem> itemsInFirstSet = firstSet.getItems();
+            AprioriItem lastFromSet1 = itemsInFirstSet.pollLast();
 
-            TreeSet<Item> itemsInSecondSet = secondSet.getItems();
-            Item lastFromSet2 = itemsInSecondSet.pollLast();
+            TreeSet<AprioriItem> itemsInSecondSet = secondSet.getItems();
+            AprioriItem lastFromSet2 = itemsInSecondSet.pollLast();
 
             if (itemsInFirstSet.equals(itemsInSecondSet) && lastFromSet1.isCompatibleWith(lastFromSet2)) {
-               ItemSet candidate = new ItemSet();
+               AprioriItemSet candidate = new AprioriItemSet();
                candidate.getItems().addAll(itemsInFirstSet);
                candidate.getItems().add(lastFromSet1);
                candidate.getItems().add(lastFromSet2);
@@ -120,37 +120,37 @@ public class AprioriAlgorithm {
       return candidates;
    }
 
-   private List<ItemSet> getItemSetsOfSize1(Set<Item> allItems) {
-      List<ItemSet> result = new ArrayList<ItemSet>();
-      for (Item item : allItems) {
-         ItemSet itemSetOfSize1 = new ItemSet();
+   private List<AprioriItemSet> getItemSetsOfSize1(Set<AprioriItem> allItems) {
+      List<AprioriItemSet> result = new ArrayList<AprioriItemSet>();
+      for (AprioriItem item : allItems) {
+         AprioriItemSet itemSetOfSize1 = new AprioriItemSet();
          itemSetOfSize1.getItems().add(item);
          result.add(itemSetOfSize1);
       }
       return result;
    }
 
-   private Set<Item> getAllItems(Collection<Transaction> transactions) {
-      Set<Item> result = new HashSet<>();
-      for (Transaction t : transactions) {
+   private Set<AprioriItem> getAllItems(Collection<AprioriTransaction> transactions) {
+      Set<AprioriItem> result = new HashSet<>();
+      for (AprioriTransaction t : transactions) {
          result.addAll(t.getItems());
       }
       return result;
    }
 
-   public List<AssociationRule> getAssociationRules(List<ItemSet> frequentItemSets) {
+   public List<AssociationRule> getAssociationRules(List<AprioriItemSet> frequentItemSets) {
       List<AssociationRule> result = new ArrayList<>();
 
       for (int i = 0; i < frequentItemSets.size(); i++) {
-         ItemSet firstSet = frequentItemSets.get(i);
+         AprioriItemSet firstSet = frequentItemSets.get(i);
          for (int j = 0; j < frequentItemSets.size(); j++) {
-            ItemSet secondSet = frequentItemSets.get(j);
+            AprioriItemSet secondSet = frequentItemSets.get(j);
             if (firstSet != secondSet && firstSet.getItems().size() > secondSet.getItems().size()) {
                if (firstSet.getItems().containsAll(secondSet.getItems())) {
                   double confidence = firstSet.getSupport() / secondSet.getSupport();
                   if (confidence >= minConfidence) {
-                     Set<Item> condition = new HashSet<>(secondSet.getItems());
-                     Set<Item> output = new HashSet<>(firstSet.getItems());
+                     Set<AprioriItem> condition = new HashSet<>(secondSet.getItems());
+                     Set<AprioriItem> output = new HashSet<>(firstSet.getItems());
                      output.removeAll(secondSet.getItems());
                      AssociationRule rule = new AssociationRule(condition, output, secondSet.getSupport(), confidence);
                      result.add(rule);

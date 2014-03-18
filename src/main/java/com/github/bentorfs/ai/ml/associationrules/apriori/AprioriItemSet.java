@@ -8,21 +8,21 @@ import java.util.TreeSet;
  * 
  * @author betorfs
  */
-public class ItemSet {
+public class AprioriItemSet {
 
-   private TreeSet<Item> items = new TreeSet<>();
+   private TreeSet<AprioriItem> items = new TreeSet<>();
 
    private double support;
 
-   public ItemSet() {
+   public AprioriItemSet() {
 
    }
 
-   public TreeSet<Item> getItems() {
+   public TreeSet<AprioriItem> getItems() {
       return items;
    }
 
-   public void setItems(TreeSet<Item> items) {
+   public void setItems(TreeSet<AprioriItem> items) {
       this.items = items;
    }
 

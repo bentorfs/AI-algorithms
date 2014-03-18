@@ -9,15 +9,15 @@ import java.util.List;
  */
 public abstract class Cluster {
 
-   public abstract List<Item> getItems();
+   public abstract List<ClusteringItem> getItems();
 
    public abstract List<Cluster> getSubClusters();
 
    public double singleLinkageDistance(Cluster other) {
       double shortestDistance = Double.MAX_VALUE;
 
-      for (Item item : getItems()) {
-         for (Item otherItem : other.getItems()) {
+      for (ClusteringItem item : getItems()) {
+         for (ClusteringItem otherItem : other.getItems()) {
             double distance = item.distanceTo(otherItem);
             if (distance < shortestDistance) {
                shortestDistance = distance;
@@ -31,8 +31,8 @@ public abstract class Cluster {
    public double completeLinkageDistance(Cluster other) {
       double longestDistance = Double.MIN_VALUE;
 
-      for (Item item : getItems()) {
-         for (Item otherItem : other.getItems()) {
+      for (ClusteringItem item : getItems()) {
+         for (ClusteringItem otherItem : other.getItems()) {
             double distance = item.distanceTo(otherItem);
             if (distance > longestDistance) {
                longestDistance = distance;
@@ -47,8 +47,8 @@ public abstract class Cluster {
       double totalDistance = 0;
       int nbOfDistances = 0;
 
-      for (Item item : getItems()) {
-         for (Item otherItem : other.getItems()) {
+      for (ClusteringItem item : getItems()) {
+         for (ClusteringItem otherItem : other.getItems()) {
             double distance = item.distanceTo(otherItem);
             totalDistance = totalDistance + distance;
             nbOfDistances++;
@@ -75,7 +75,7 @@ public abstract class Cluster {
          }
          result.append("}\n");
       } else {
-         for (Item item : getItems()) {
+         for (ClusteringItem item : getItems()) {
             result.append("ITEM:" + item.toString() + "\n");
          }
       }

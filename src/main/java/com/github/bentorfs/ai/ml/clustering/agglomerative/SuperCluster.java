@@ -25,8 +25,8 @@ public class SuperCluster extends Cluster {
 
    /** {@inheritDoc} */
    @Override
-   public List<Item> getItems() {
-      List<Item> result = new ArrayList<>();
+   public List<ClusteringItem> getItems() {
+      List<ClusteringItem> result = new ArrayList<>();
       for (Cluster subCluster : subClusters) {
          result.addAll(subCluster.getItems());
       }
@@ -42,7 +42,7 @@ public class SuperCluster extends Cluster {
    /** {@inheritDoc} */
    @Override
    public double meanInterdistance() {
-      List<Item> items = getItems();
+      List<ClusteringItem> items = getItems();
       Mean mean = new Mean();
       for (int i = 0; i < items.size(); i++) {
          for (int j = i + 1; j < items.size(); j++) {

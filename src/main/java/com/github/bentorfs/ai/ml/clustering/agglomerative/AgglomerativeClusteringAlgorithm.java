@@ -31,13 +31,13 @@ public class AgglomerativeClusteringAlgorithm {
       this.type = type;
    }
 
-   public Cluster induceClusters(Collection<Item> items) {
+   public Cluster induceClusters(Collection<ClusteringItem> items) {
       logger.debug("Incuding hierarchical clusters from a dataset with {} items, using clustering type {}",
             items.size(), type.toString());
 
       // Create initial clusters of size 1, one for each item
       List<Cluster> currentClusters = new ArrayList<Cluster>();
-      for (Item item : items) {
+      for (ClusteringItem item : items) {
          currentClusters.add(item);
       }
 

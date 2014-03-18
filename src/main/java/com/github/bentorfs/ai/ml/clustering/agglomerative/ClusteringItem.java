@@ -4,18 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 
+ * Represents a cluster containing only one item
  * 
  * @author betorfs
  */
-public abstract class Item extends Cluster {
+public abstract class ClusteringItem extends Cluster {
 
-   public abstract double distanceTo(Item other);
+   public abstract double distanceTo(ClusteringItem other);
 
    /** {@inheritDoc} */
    @Override
-   public List<Item> getItems() {
-      ArrayList<Item> result = new ArrayList<>();
+   public List<ClusteringItem> getItems() {
+      ArrayList<ClusteringItem> result = new ArrayList<>();
       result.add(this);
       return result;
    }
