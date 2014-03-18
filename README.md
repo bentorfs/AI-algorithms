@@ -10,7 +10,7 @@ To see an example of how to use the library, take a look at the unit tests. One 
 <dependency>
     <groupId>com.github.bentorfs</groupId>
     <artifactId>ai-algorithms</artifactId>
-    <version>0.1.0</version>
+    <version>0.2.0</version>
 </dependency>
 ```
 
