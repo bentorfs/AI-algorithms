@@ -18,6 +18,14 @@
 		</license>
 	</licenses>
 
+	<developers>
+		<developer>
+			<id>bentorfs</id>
+			<name>Ben Torfs</name>
+			<email>bentorfs@gmail.com</email>
+		</developer>
+	</developers>
+
 	<scm>
 		<url>https://github.com/bentorfs/AI-algorithms.git</url>
 	</scm>
